@@ -1,0 +1,15 @@
+
+RabbitMQ Docker(https://hub.docker.com/_/rabbitmq/):
+----------------------------
+Command to Pull Docker:docker pull rabbitmq
+
+To Simplly run docker:
+docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3
+
+If you’d like to use the RabbitMQ management tool, then run this instead (which runs RabbitMQ and the management tool)
+
+docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+Note: default login for the management UI is via a web browser using http://host:15672 obviously replacing the host with 
+your server IP address. The default login and password are guest/guest
+
