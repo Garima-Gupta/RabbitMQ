@@ -33,3 +33,38 @@ https://www.rabbitmq.com/rabbitmqctl.8.html
 Obtaining rabbitmqadmin
 With the management plugin installed, browse to http://{hostname}:15672/cli/rabbitmqadmin to download
 
+------------------------------------------------------------------------------------------------------------------------------
+RabbitMQ rabbitmqadmin:
+
+Declare a queue, with optional parameters
+rabbitmqadmin declare queue name=my-new-queue durable=false
+
+rabbitmqadmin declare exchange name=my-new-exchange type=fanout
+rabbitmqadmin publish exchange=amq.default routing_key=test payload="hello, world"
+rabbitmqadmin -V test list exchanges
+
+Get a list of queues, with all the detail we can take
+rabbitmqadmin -f long -d 3 list queues
+
+Close all connections
+rabbitmqadmin -f tsv -q list connections name | while read conn ; do rabbitmqadmin -q close 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
