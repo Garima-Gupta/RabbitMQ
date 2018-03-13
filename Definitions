@@ -28,3 +28,19 @@ permissions to specific virtual hosts.
 Vhost, virtual host: A Virtual host provides a way to segregate applications using the same RabbitMQ instance. 
 Different users can have different access privileges to different vhost and queues and exchanges can be created so they only 
 exist in one vhost.
+
+Offline message consumer - another message consumer component of the app will monitor the alternate exchange queue for customers who are offline in order to pull the messages out of the queue for storage in a database (to be later displayed to the customer when they are online) or to push to an email service that will email the messages, according to customer preference; the offline message consumer will also monitor the dead letter queue to
+pull the messages out to a log for later review or to email alerts to the dev team, according to the process that works for Content Corp
+
+The full list of available arguments includes a variety of options:
+--------------------------------------------------------------------
+Time-to-live, aka TTL, (x-message-ttl) - where messages in the queue will die after the set lifespan is reached and they have not yet been consumed
+Auto expire (x-expires) - where the queue itself will expire after a certain period of time if no messages have been accessed
+Max length (x-max-length) - for defining how many messges the queue is allowed to hold; messages from the front of the queue will be dead-lettered to make way for new messages when the maximum length is reached
+Max length bytes (x-max-length-bytes) - for defining in bytes how large the queue can become; just like the maximum length above, messages from the front of the queue will be dead-lettered first
+Dead letter exchange, aka DLX, (x-dead-letter-exchange) - indicates the exchange for routing dead messages out of the queue because they have reached the end of their time-to-live, they exceed the max length (messages or bytes) configured for the queue, or they have been rejected by the queue or nacked (negative acknowledgement) by the consumer due to some issue and are not slated for re-queueing
+Dead letter routing key (x-dead-letter-routing-key) - provides a new routing key context to the dead letter exchange; if no dead letter routing key is set, then the original routing key will be used
+Maximum priority (x-max-priority) - allows the queue to prioritize priority messages up to some maximum level you set; messages higher than the maximum for the queue will be re-prioritized down to this maximum level
+
+
+
