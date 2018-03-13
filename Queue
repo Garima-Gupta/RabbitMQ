@@ -1,0 +1,33 @@
+
+Alternate Exchanges:
+It is sometimes desirable to let clients handle messages that an exchange was unable to route (i.e. either because there were no bound queues our no matching bindings). Typical examples of this are
+
+detecting when clients accidentally or maliciously publish messages that cannot be routed
+"or else" routing semantics where some messages are handled specially and the rest by a generic handler
+RabbitMQ's Alternate Exchange ("AE") feature addresses these use cases.
+--------------------------------------------------
+Dead Letter Exchanges:
+Messages from a queue can be 'dead-lettered'; that is, republished to another exchange when any of the following events occur:
+
+The message is rejected (basic.reject or basic.nack) with requeue=false,
+The TTL for the message expires; or
+The queue length limit is exceeded.
+Dead letter exchanges (DLXs) are normal exchanges. They can be any of the usual types and are declared as usual.
+---------------------------------------------------------
+Priority Queue Support
+RabbitMQ has priority queue implementation in the core as of version 3.5.0.
+
+You can declare priority queues using the x-max-priority argument. This argument should be an integer indicating the maximum priority 
+the queue should support.
+
+-------------------------------------------------------------------
+Lazy Queues
+Since RabbitMQ 3.6.0, the broker has the concept of Lazy Queues - queues that move their contents to disk as early as practically possible, and only load them in RAM when requested by consumers, therefore the lazy denomination.
+
+One of the main goals of lazy queues is to be able to support very long queues (many millions of messages). Queues can become very long for various reasons:
+
+consumers are offline / have crashed / are down for maintenance
+there is a sudden message ingress spike, producers are outpacing consumers
+consumers are slower than normal
+By default, queues keep an in-memory cache of messages that is filled up as messages are published into RabbitMQ. The idea of this cache is to be able to deliver messages to consumers as fast as possible. Note that persistent messages
+can be written to disk as they enter the broker and kept in RAM at the same time.
