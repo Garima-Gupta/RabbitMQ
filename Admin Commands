@@ -2,3 +2,34 @@
 rabbitmqctl list_policies
 rabbitmqctl.bat list_queues
 rabbitmqctl list_bindings
+
+You should enable the management plugin.
+rabbitmq-plugins enable rabbitmq_management
+
+rabbitmqadmin get queue=<QueueName> requeue=false
+will give you the first message off the queue.
+
+To enable plugins, use the rabbitmq-plugins tool:
+rabbitmq-plugins enable plugin-name
+
+And to disable plugins again, use:
+rabbitmq-plugins disable plugin-name
+
+You can see a list of which plugins are enabled with:
+rabbitmq-plugins list
+
+Start:rabbitmq-server start
+Stop:rabbitmq-server stop
+
+Login to RabbitMQ Management Dashboard
+By default the management plugin runs on 15672 HTTP port.
+
+From your browser go to http://{your-ip-address}:15672/
+
+The default username and password for RabbitMQ management plugin is: guest/guest
+
+https://www.rabbitmq.com/rabbitmqctl.8.html
+
+Obtaining rabbitmqadmin
+With the management plugin installed, browse to http://{hostname}:15672/cli/rabbitmqadmin to download
+
